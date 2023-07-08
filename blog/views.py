@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.views import View
 from django.contrib import messages
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 
 from .forms import ArticleCreateForm
+from .models import Article
 # Create your views here.
 
 
@@ -26,3 +27,21 @@ class ArticleCreateView(View):
         
         messages.add_message(request, messages.ERROR, "Invalid data!")
         return render(request, 'blog/article-create.html', {'form': form})
+    
+class ArticleListView(View):
+    model = Article
+    
+    def get(self, request):
+        context = {
+            'articles': self.model.objects.all()
+        }
+        return render(request, 'blog/article-list.html', context)
+    
+class ArticleDetailView(View):
+    model = Article
+    
+    def get(self, request, id):
+        context = {
+            'article': get_object_or_404(self.model, pk=id)
+        }
+        return render(request, 'blog/article-detail.html', context)
