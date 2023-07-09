@@ -45,3 +45,18 @@ class ArticleDetailView(View):
             'article': get_object_or_404(self.model, pk=pk)
         }
         return render(request, 'blog/article-detail.html', context)
+    
+class ArticleDeleteView(View):
+    model = Article
+    
+    def get(self, request, pk):
+        context = {
+            'article': get_object_or_404(self.model, pk=pk)
+        }
+        return render(request, 'blog/article-delete.html', context)
+    
+    def post(self, request, pk):
+        article = get_object_or_404(self.model, pk=pk)
+        article.delete()
+        return redirect('article_list')
+        
