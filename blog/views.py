@@ -18,7 +18,7 @@ class ArticleCreateView(View):
         return render(request, 'blog/article-create.html', {'form': form})
     
     def post(self, request):
-        form = self.form_class(**request.POST)
+        form = self.form_class(request.POST)
         if form.is_valid():
             article = form.save()
             messages.add_message(request, messages.SUCCESS,
@@ -40,8 +40,8 @@ class ArticleListView(View):
 class ArticleDetailView(View):
     model = Article
     
-    def get(self, request, id):
+    def get(self, request, pk):
         context = {
-            'article': get_object_or_404(self.model, pk=id)
+            'article': get_object_or_404(self.model, pk=pk)
         }
         return render(request, 'blog/article-detail.html', context)
