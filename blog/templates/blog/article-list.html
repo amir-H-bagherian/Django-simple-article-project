@@ -1,18 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends 'blog/base.html' %}
+{% load static %}
+
+
+{% block extra_head %}
     <title>List Articles</title>
-</head>
-<body>
+    <link rel="stylesheet" href="{% static 'style/style.css' %}">
+{% endblock %}
+
+
+{% block content %}
     <h1>Articles</h1>
     <div class="container">
+        {% if articles|length > 0 %}
         <ul>
             {% for article in articles %}
-                <li><a href="{{ article.get_absolute_url }}">{{article.title}}</a></li>
+                <li><a href="{{ article.get_absolute_url }}">{{article.title}}</a></li><hr>
             {% endfor %}
+
+            <a href="{% url 'article_create' %}"><button class="btn" type="button">Create!</button></a>
         </ul>
+        {% else %}
+        <h3>No Articles yet!</h3>
+        <p>click <a href="{% url 'article_create' %}">here</a> to create one!</p>
+        {% endif %}
     </div>
-</body>
-</html>
+{% endblock %}    
