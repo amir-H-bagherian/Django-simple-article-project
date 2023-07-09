@@ -1,17 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends 'blog/base.html' %}
+{% load static %}
+
+
+{% block extra_head %}
     <title>Article Details</title>
-</head>
-<body>
+    <link rel="stylesheet" href="{% static 'style/style.css' %}">
+{% endblock %}
+
+
+{% block content %}
     <div class="container">
         <h1>{{article.title}}</h1>
         <p>
             {{article.content}}
         </p>
     </div>
-    <button class="go-back-btn"><a href="{% url 'article_list' %}">Go Back</a></button>
-</body>
-</html>
+    <a href="{% url 'article_delete' article.id %}"><button class="btn">Delete</button></a>
+    <a href="{% url 'article_list' %}"><button class="btn">Go Back</button></a>
+{% endblock %}    
